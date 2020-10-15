@@ -10,7 +10,6 @@ const Ingredients = () => {
       <section>
         <Search />
       </section>
-      <Search />
     </div>
   );
 };
