@@ -8,10 +8,21 @@ const Ingredients = () => {
   const [ingredients, setIngredients] = useState([]);
 
   const addIngredientHandler = (ingredient) => {
-    setIngredients((prevIngredients) => [
-      ...prevIngredients,
-      { id: Math.random().toString(), ...ingredient },
-    ]);
+    //browser function is built into modern browsers to understand the request. By default will send a get request
+    fetch("https://react-hooks-6a0d2.firebaseio.com//ingredients.json", {
+      method: "POST",
+      body: JSON.stringify({ ingredient }), //firebase will generate an id
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        return response.json(); //will get the response to convert it from json to normal javascript code
+      })
+      .then((responseData) => {
+        setIngredients((prevIngredients) => [
+          ...prevIngredients,
+          { id: responseData.name, ...ingredient }, // we get the id from firebase response
+        ]);
+      });
   };
 
   const removeItemHandler = (id) => {
