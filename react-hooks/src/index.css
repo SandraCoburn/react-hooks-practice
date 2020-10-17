@@ -3,10 +3,7 @@
 * {
   box-sizing: border-box;
 }
-.App {
-  margin: auto;
-  padding: 10%;
-}
+
 html,
 body {
   font-family: "Open Sans", sans-serif;
