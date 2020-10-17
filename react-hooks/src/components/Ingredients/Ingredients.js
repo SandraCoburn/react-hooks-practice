@@ -27,6 +27,10 @@ const Ingredients = () => {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("RENDERING INGREDIENTS");
+  });
+
   const addIngredientHandler = (ingredient) => {
     //browser function is built into modern browsers to understand the request. By default will send a get request
     fetch("https://react-hooks-6a0d2.firebaseio.com/ingredients.json", {
