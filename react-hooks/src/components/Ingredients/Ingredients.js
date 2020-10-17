@@ -8,20 +8,20 @@ const Ingredients = () => {
   const [userIngredients, setUserIngredients] = useState([]);
 
   //useEffect function gets executed after rendering the component, on second rerender and after every rendering
-  useEffect(() => {
-    fetch("https://react-hooks-6a0d2.firebaseio.com/ingredients.json")
-      .then((response) => response.json())
-      .then((responseData) => {
-        const loadedIngredients = Object.keys(responseData).map((key, val) => {
-          return {
-            id: responseData[key],
-            title: responseData[key].title,
-            amount: responseData[key].amount,
-          };
-        });
-        setUserIngredients(loadedIngredients);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://react-hooks-6a0d2.firebaseio.com/ingredients.json")
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       const loadedIngredients = Object.keys(responseData).map((key, val) => {
+  //         return {
+  //           id: responseData[key],
+  //           title: responseData[key].title,
+  //           amount: responseData[key].amount,
+  //         };
+  //       });
+  //       setUserIngredients(loadedIngredients);
+  //     });
+  // }, []);
 
   useEffect(() => {
     console.log("RENDERING INGREDIENTS", userIngredients);
