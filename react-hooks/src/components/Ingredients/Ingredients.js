@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
@@ -12,17 +12,13 @@ const Ingredients = () => {
     fetch("https://react-hooks-6a0d2.firebaseio.com/ingredients.json")
       .then((response) => response.json())
       .then((responseData) => {
-        const loadedIngredients = [];
-        console.log("respone", responseData);
-        console.log("loadedIng", loadedIngredients);
-        for (const key in responseData) {
-          console.log("key", key);
-          loadedIngredients.push({
-            id: key,
+        const loadedIngredients = Object.keys(responseData).map((key, val) => {
+          return {
+            id: responseData[key],
             title: responseData[key].title,
             amount: responseData[key].amount,
-          });
-        }
+          };
+        });
         setUserIngredients(loadedIngredients);
       });
   }, []);
@@ -42,6 +38,7 @@ const Ingredients = () => {
         return response.json(); //will get the response to convert it from json to normal javascript code
       })
       .then((responseData) => {
+        console.log("responseData", responseData);
         setUserIngredients((prevIngredients) => [
           ...prevIngredients,
           { id: responseData.name, ...ingredient }, // we get the id from firebase response
@@ -55,9 +52,11 @@ const Ingredients = () => {
     );
   };
 
-  const filteredIngredientsHandler = () => {
+  //useCallback allows to wrap a function, first arguement is your function second argument is your dependency
+  //so it will survive useEffect re rendering cycles by checking if its' the same as previous rendering to prevent re rendering
+  const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     setUserIngredients(filteredIngredients);
-  };
+  }, []); // we don't need to add setUserIngredients as dependency because that's state and will only change it state changes
 
   return (
     <div className="App">
